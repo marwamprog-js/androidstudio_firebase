@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +27,57 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DatabaseReference usuarios = reference.child("usuarios");
 
+//        DatabaseReference usuarioPesquisa = usuarios.child("-NSAlJBxKgPxACoJr0Aa");
+
+//        Query usuarioPesquisa = usuarios.orderByChild("nome").equalTo("Marwam");
+//        Query usuarioPesquisa = usuarios.orderByKey().limitToFirst(2);
+//        Query usuarioPesquisa = usuarios.orderByKey().limitToLast(2);
+
+        /* Maior ou igual (>=) */
+//        Query usuarioPesquisa = usuarios.orderByChild("idade").startAt(30);
+
+        /* Menor ou igual (<=) */
+//        Query usuarioPesquisa = usuarios.orderByChild("idade").endAt(30);
+
+        /* Menor ou igual (Between = (>=) (<=)) */
+//        Query usuarioPesquisa = usuarios.orderByChild("idade")
+//                .startAt(30)
+//                .endAt(50);
+
+        /* Filtrar Plavras (LIKE) */
+        Query usuarioPesquisa = usuarios.orderByChild("nome")
+                .startAt("L")
+                .endAt("L" + "\uf8ff");
+
+
+        usuarioPesquisa.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                Log.i("Dados usuário: ", snapshot.getValue().toString());
+
+//                Usuario dadoUsuario = snapshot.getValue(Usuario.class);
+//                Log.i("Dados usuário: ", "nome: " + dadoUsuario.getNome() + " idade: " + dadoUsuario.getIdade());
+//                Log.i("Dados usuário: ", snapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+//        Usuario usuario = new Usuario();
+//        usuario.setNome("Brenda");
+//        usuario.setSobrenome("Lopes");
+//        usuario.setIdade(33);
+//
+//        usuarios.push().setValue( usuario );
 
         /* Deslogar usuário */
 //        usuario.signOut();
